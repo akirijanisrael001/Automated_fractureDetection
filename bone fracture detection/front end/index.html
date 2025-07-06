@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CrackTrack</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background: #1a252f;
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            position: fixed;
+            z-index: 1000;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo h1 {
+            font-size: 30px;
+            margin-left: 10px;
+            color: #fff;
+            font-family: "Rubik Dirt", serif;
+            font-weight: bolder;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            color: #fff;
+            padding: 10px 15px;
+            transition: transform 0.3s ease, color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            transform: scale(1.1, 1.1);
+            color: #3457d5;
+        }
+
+        .btn.logout {
+            background-color: red;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn.logout:hover {
+            background-color: crimson;
+            transform: scale(1.05, 1.1);
+        }
+
+        #Home {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .bg-blur {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100%;
+            background-image: url('IMG_1400.JPG');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: blur(3px);
+            z-index: -1;
+        }
+
+        .home-content {
+            position: relative;
+            z-index: 1;
+            color: black;
+            margin-left: 50px;
+        }
+
+        #Home h1 {
+            font-size: 60px;
+            font-weight: bolder;
+        }
+
+        #Home p {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        #Home .btn1,
+        #Home .btn2 {
+            border: none;
+            padding: 10px 15px;
+            font-weight: bold;
+            margin-left: 3px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+
+        #Home .btn1 {
+            background-color: #007bff;
+            color: white;
+        }
+
+        #Home .btn2 {
+            background-color: white;
+            color: black;
+        }
+
+        #Home .btn1:hover,
+        #Home .btn2:hover {
+            background-color: #555;
+            color: white;
+            transition: 0.5s ease, transform 0.5s ease;
+            transform: scale(1.05, 1.1);
+        }
+
+        #changingText {
+            position: relative;
+            display: inline-block;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        #changingText::after {
+            content: "|";
+            position: absolute;
+            right: -10px;
+            color: #3457d5;
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .about-section {
+            padding: 60px 20px;
+            text-align: center;
+            height: 80vh;
+        }
+
+        .about-header {
+            margin-bottom: 40px;
+        }
+
+        .about-header h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .subtext {
+            font-size: 1.1em;
+            color: #6c757d;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .services-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .service-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card.highlighted {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .service-card.highlighted h3,
+        .service-card.highlighted p {
+            color: #fff;
+        }
+
+        .service-card .icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .service-card h3 {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            font-size: 1em;
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+
+        .service-card .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .service-card .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .service-card.highlighted .btn {
+            background-color: #fff;
+            color: #007bff;
+        }
+
+        .service-card.highlighted .btn:hover {
+            background-color: #e9ecef;
+        }
+
+        .appointment-section {
+            padding: 100px 50px 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            min-height: 100vh;
+            background: url('https://via.placeholder.com/1500x300') no-repeat top center;
+            background-size: contain;
+            gap: 40px;
+            background-color: #f5f7fa;
+        }
+
+        .appointment-left {
+            flex: 1;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .appointment-left h1 {
+            font-size: 48px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .appointment-left p {
+            font-size: 16px;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+
+        .appointment-left img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 0px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 50%;
+        }
+
+        .appointment-right {
+            flex: 1;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .appointment-right h2 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .appointment-right form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .appointment-right form input,
+        .appointment-right form select,
+        .appointment-right form textarea {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .appointment-right form input[type="date"],
+        .appointment-right form input[type="time"] {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .appointment-right form textarea {
+            height: 100px;
+            resize: none;
+        }
+
+        .appointment-right form button {
+            padding: 12px;
+            background-color: #6a4df4;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .appointment-right form button:hover {
+            background-color: #5a3de4;
+        }
+
+        @media (max-width: 768px) {
+            .appointment-section {
+                padding: 50px 20px;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .appointment-left,
+            .appointment-right {
+                flex: 100%;
+                max-width: 100%;
+            }
+
+            .appointment-left {
+                margin-bottom: 30px;
+            }
+        }
+
+        .testimonials-section {
+            padding: 60px 20px;
+            text-align: center;
+            width: 100%;
+            margin: 0 auto;
+            background-color: #fff;
+        }
+
+        .testimonials-section h2 {
+            color: #000;
+            font-size: 2em;
+            margin-bottom: 40px;
+        }
+
+        .testimonial-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            width: 200px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .testimonial-card img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .testimonial-card p {
+            font-style: italic;
+            color: #333;
+            margin: 0 0 10px;
+        }
+
+        .testimonial-card .name {
+            font-weight: bold;
+            color: #00bcd4;
+        }
+
+        /* Blog Section Styles */
+        .blog-section {
+            padding: 50px 20px;
+            background-color: #f5f7fa;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-section h2 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .blog-nav {
+            margin-bottom: 20px;
+        }
+
+        .nav-btn {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: #555;
+        }
+
+        .blog-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 10px 0;
+        }
+
+        .blog-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            flex-shrink: 0;
+            text-align: left;
+            padding: 15px;
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .blog-card p {
+            font-size: 16px;
+            color: #7f8c8d;
+            margin: 10px 0;
+        }
+
+        .read-more {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: #0056b3;
+        }
+
+        /* Hide scrollbar for a cleaner look */
+        .blog-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .blog-container {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .blog-section {
+                padding: 30px 10px;
+            }
+
+            .blog-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .blog-card {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .about-header h1 {
+                font-size: 2em;
+            }
+
+            .subtext {
+                font-size: 1em;
+            }
+
+            .service-card {
+                width: 100%;
+                max-width: 350px;
+            }
+
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 10px;
+            }
+
+            .testimonial-card {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+
+        .footer {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            padding: 40px 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-section h2 {
+            font-size: 20px;
+            color: #3457d5;
+            margin-bottom: 15px;
+            font-family: "Rubik Dirt", serif;
+        }
+
+        .footer-section p {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #3457d5;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .social-icon {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: #3457d5;
+            color: #ffffff;
+            text-align: center;
+            line-height: 30px;
+            border-radius: 50%;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: #555;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            margin-top: 20px;
+        }
+
+        .footer-links a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #3457d5;
+        }
+
+        .footer-bottom p {
+            font-size: 12px;
+            color: #999;
+            margin-top: 10px;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .container {
+            border: 5px #3457d5 solid;
+            height: 20px;
+            width: 20px;
+            border-radius: 4px;
+            box-shadow: 0 0 8px #3457d5, 0 0 8px #3457d5 inset;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            translate: -50% -50%;
+            z-index: 10;
+            animation: 2s loading ease-in-out infinite;
+            animation-play-state: running;
+            cursor: pointer;
+        }
+
+        @keyframes loading {
+            0% {
+                transform: rotateX(0) rotateY(0) rotateZ(0);
+            }
+            33% {
+                transform: rotateX(180deg) rotateY(180deg) rotateZ(0);
+                scale: 1.3;
+            }
+            67% {
+                transform: rotateX(180deg) rotateY(180deg) rotateZ(0);
+                scale: 1.1;
+            }
+            100% {
+                transform: rotateX(180deg) rotateY(180deg) rotateZ(180deg);
+                scale: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <h1><span style="color: #3457d5">CRACK </span>TRACK</h1>
+        </div>
+        <div class="nav-links">
+            <a href="#Home" id="homeLink">Home</a>
+            <a href="#about-section" id="aboutLink">About</a>
+            <a href="#contact" id="contactLink">Contact</a>
+            <a href="#blog" id="blogLink">Blog</a>
+        </div>
+        <a href="#" class="btn logout" id="logoutBtn">Log out</a>
+    </div>
+
+    <section id="Home">
+        <div class="bg-blur"></div>
+        <div class="home-content">
+            <h1>Bone Fracture Detection</h1>
+            <p id="changingText"></p>
+            <br />
+            <button class="btn1" id="uploadBtn">UPLOAD AN IMAGE</button>
+            <button class="btn2" id="appointmentBtn">BOOK AN APPOINTMENT</button>
+        </div>
+    </section>
+
+    <div id="about-section" class="about-section">
+        <div class="about-header">
+            <h1>Supporting Your Journey to Recovery</h1>
+        </div>
+        <div class="services-container">
+            <div class="service-card">
+                <div class="icon">🩺</div>
+                <h3>Technologies Used</h3>
+                <p>
+                    Technologies used include Python, TensorFlow, and OpenCV for image preprocessing and model development, along with Jupyter Notebook for experimentation and visualization of results. X-ray datasets were used for training.
+                </p>
+            </div>
+            <div class="service-card highlighted">
+                <div class="icon">📚</div>
+                <h3>How the System Works</h3>
+                <p>
+                    The system uses a convolutional neural network (CNN) to analyze labeled X-ray images, automatically detecting and classifying bone fractures based on learned features from medical imaging datasets.
+                </p>
+            </div>
+            <div class="service-card">
+                <div class="icon">💬</div>
+                <h3>Project Purpose or Mission</h3>
+                <p>
+                    The project aims to assist healthcare professionals by automating bone fracture detection and classification using deep learning, enhancing diagnostic speed, accuracy, and accessibility, especially in low-resource medical environments.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <section class="appointment-section">
+        <div class="appointment-left">
+            <h1>Appointments</h1>
+            <img src="Photo Portrait of Confident Male Doctor in White Coat with Stethoscope _ Premium AI-generated image.jpg" alt="Doctor">
+        </div>
+        <div class="appointment-right">
+            <h2>Book An Appointment</h2>
+            <form id="appointmentForm">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <select name="doctor" required>
+                    <option value="" disabled selected>Choose Doctor</option>
+                    <option value="dr1">Dr. John Doe</option>
+                    <option value="dr2">Dr. Jane Smith</option>
+                </select>
+                <input type="date" name="date" required>
+                <input type="time" name="time" required>
+                <textarea name="problem" placeholder="Additional text" required></textarea>
+                <button type="submit">Book Appointment</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="testimonials-section">
+        <h2>Testimonials</h2>
+        <div class="testimonial-container">
+            <div class="testimonial-card">
+                <img src="Female Professional Headshot - West African.jpg" alt="Josephine">
+                <p>“Josephine dummy Lorem ipsum is simply dummy text the industry standard toes galley type and scrambled but also.”</p>
+                <div class="name">Josephine</div>
+            </div>
+            <div class="testimonial-card">
+                <img src="Male Professional Headshot - East African.jpg" alt="Anasbal">
+                <p>“Anasbal dummy Lorem ipsum is simply dummy text the industry standard toes galley type and scrambled but also.”</p>
+                <div class="name">Anasbal</div>
+            </div>
+            <div class="testimonial-card">
+                <img src="Personal Branding Photoshoot Inspiration.jpg" alt="Allina Joel">
+                <p>“Allina Joel dummy Lorem ipsum is simply dummy text the industry standard toes galley type and scrambled but also.”</p>
+                <div class="name">Allina Joel</div>
+            </div>
+            <div class="testimonial-card">
+                <img src="Male Professional Headshot - Mixed Asian-African.jpg" alt="Albert Chirls">
+                <p>“Albert Chirls dummy Lorem ipsum is simply dummy text the industry standard toes galley type and scrambled but also.”</p>
+                <div class="name">Albert Chirls</div>
+            </div>
+        </div>
+    </section>
+    <div id="blog" class="blog-section">
+    <h2>Our Latest Blogs</h2>
+    <div class="blog-container">
+        <div class="blog-card">
+            <img src="xray analysis.jpg" alt="X-ray Analysis">
+            <p>Understanding X-Ray Analysis for Bone Fractures</p>
+            <a href="understanding x-ray analysis for bone fractures.pdf" class="read-more" download>Read Blog +</a>
+        </div>
+        <div class="blog-card">
+            <img src="AI DIAGNOSTICS.jpg" alt="AI in Diagnostics">
+            <p>AI Innovations in Bone Fracture Diagnostics</p>
+            <a href="AI Innovations in Bone Fracture Diagnostics.pdf" class="read-more" download>Read Blog +</a>
+        </div>
+        <div class="blog-card">
+            <img src="FRACTURE RECOVERY TIPS.jpg" alt="Recovery Tips">
+            <p>Top Recovery Tips After a Bone Fracture</p>
+            <a href="Top Recovery Tips After a Bone Fracture.pdf" class="read-more" download>Read Blog +</a>
+        </div>
+        <div class="blog-card">
+            <img src="fRACTURE PREVENTION.jpg" alt="Prevention Guide">
+            <p>Preventing Bone Fractures: A Comprehensive Guide</p>
+            <a href="Preventing Bone Fractures... A Comprehensive Guide.pdf" class="read-more" download>Read Blog +</a>
+        </div>
+    </div>
+</div>
+    <div id="contact" class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h2>CRACK TRACK</h2>
+                <p>Detect fractures with AI precision</p>
+                <p>
+                    About Us<br />
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+            </div>
+            <div class="footer-section">
+                <h2>Services</h2>
+                <ul>
+                    <li>Planning</li>
+                    <li>Research</li>
+                    <li>Consulting</li>
+                    <li>Analysis</li>
+                    <li>User Testing</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h2>Company</h2>
+                <ul>
+                    <li>Who We Are</li>
+                    <li>Our Services</li>
+                    <li>Our Clients</li>
+                    <li>Pricing</li>
+                    <li>Contact Us</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h2>Contact Us</h2>
+                <p>Call: +234(0)8159086371</p>
+                <p>Email: akirijanoerume@icloud.com</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon">F</a>
+                    <a href="#" class="social-icon">T</a>
+                    <a href="#" class="social-icon">L</a>
+                    <a href="#" class="social-icon">I</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a> | <a href="#">Our History</a> | <a href="#">What We Do</a>
+            </div>
+            <p>© 2025 Crack Track. All images are for demo purposes only.</p>
+        </div>
+    </div>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="container"></div>
+    </div>
+
+    <script>
+        const messages = [
+            "Upload an X-ray image to detect fractures with AI.",
+            "Detect fractures instantly with our AI tool!",
+            "Upload your X-ray for a quick analysis.",
+            "AI-powered fracture detection at your fingertips.",
+        ];
+
+        let messageIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const textElement = document.getElementById("changingText");
+        const uploadBtn = document.getElementById("uploadBtn");
+        const appointmentBtn = document.getElementById("appointmentBtn");
+        const loadingOverlay = document.getElementById("loadingOverlay");
+        const logoutBtn = document.getElementById("logoutBtn");
+
+        const typingSpeed = 100;
+        const deletingSpeed = 50;
+        const pauseBetween = 3000;
+
+        function typeWriter() {
+            const currentMessage = messages[messageIndex];
+
+            if (!isDeleting) {
+                if (charIndex < currentMessage.length) {
+                    textElement.textContent = currentMessage.substring(0, charIndex + 1);
+                    charIndex++;
+                    setTimeout(typeWriter, typingSpeed);
+                } else {
+                    setTimeout(() => {
+                        isDeleting = true;
+                        setTimeout(typeWriter, deletingSpeed);
+                    }, pauseBetween);
+                }
+            } else {
+                if (charIndex > 0) {
+                    textElement.textContent = currentMessage.substring(0, charIndex - 1);
+                    charIndex--;
+                    setTimeout(typeWriter, deletingSpeed);
+                } else {
+                    isDeleting = false;
+                    messageIndex = (messageIndex + 1) % messages.length;
+                    setTimeout(typeWriter, typingSpeed);
+                }
+            }
+        }
+
+        typeWriter();
+
+        uploadBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            loadingOverlay.style.display = "flex";
+            setTimeout(() => {
+                window.location.href = "upload.html";
+            }, 2000);
+        });
+
+        appointmentBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            const appointmentSection = document.querySelector(".appointment-section");
+            if (appointmentSection) {
+                loadingOverlay.style.display = "flex";
+                setTimeout(() => {
+                    appointmentSection.scrollIntoView({ behavior: "smooth" });
+                    loadingOverlay.style.display = "none";
+                }, 1000);
+            } else {
+                console.error("Appointment section not found");
+            }
+        });
+
+        logoutBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (confirm("Are you sure you want to logout?")) {
+                loadingOverlay.style.display = "flex";
+                setTimeout(() => {
+                    window.location.href = "login.html";
+                }, 2000);
+            }
+        });
+
+        const contactLink = document.getElementById("contactLink");
+        contactLink.addEventListener("click", function (e) {
+            e.preventDefault();
+            const contactSection = document.getElementById("contact");
+            if (contactSection) {
+                loadingOverlay.style.display = "flex";
+                setTimeout(() => {
+                    contactSection.scrollIntoView({ behavior: "smooth" });
+                    loadingOverlay.style.display = "none";
+                }, 1000);
+            } else {
+                console.error("Contact section not found");
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const appointmentForm = document.getElementById('appointmentForm');
+
+            appointmentForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const formData = new FormData(appointmentForm);
+                const data = Object.fromEntries(formData);
+
+                alert(`Appointment Booked!\nName: ${data.name}\nEmail: ${data.email}\nDoctor: ${data.doctor}\nDate: ${data.date}\nTime: ${data.time}\nProblem: ${data.problem}`);
+                appointmentForm.reset();
+            });
+
+            // Set minimum date to today (June 19, 2025)
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.querySelector('input[type="date"]');
+            dateInput.min = today;
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+    const blogContainer = document.querySelector('.blog-container');
+    const prevBtn = document.querySelector('.nav-btn.prev');
+    const nextBtn = document.querySelector('.nav-btn.next');
+    const cardWidth = 320; // Width of each card including margin
+    let currentPosition = 0;
+
+    // Scroll to the next set of cards
+    nextBtn.addEventListener('click', () => {
+        const maxScroll = (blogContainer.scrollWidth - blogContainer.clientWidth) / cardWidth;
+        if (currentPosition < maxScroll) {
+            currentPosition++;
+            blogContainer.scrollTo({
+                left: currentPosition * cardWidth,
+                behavior: 'smooth'
+            });
+        }
+    });
+
+    // Scroll to the previous set of cards
+    prevBtn.addEventListener('click', () => {
+        if (currentPosition > 0) {
+            currentPosition--;
+            blogContainer.scrollTo({
+                left: currentPosition * cardWidth,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+const blogLink = document.getElementById("blogLink");
+blogLink.addEventListener("click", function (e) {
+    e.preventDefault();
+    const blogSection = document.getElementById("blog");
+    if (blogSection) {
+        loadingOverlay.style.display = "flex";
+        setTimeout(() => {
+            blogSection.scrollIntoView({ behavior: "smooth" });
+            loadingOverlay.style.display = "none";
+        }, 1000);
+    } else {
+        console.error("Blog section not found");
+    }
+});
+    </script>
+</body>
+</html>

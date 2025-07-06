@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PageDone Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-image: url('IMG_1402.JPG');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      color: white;
+      position: relative;
+    }
+    .bg-blur {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      filter: blur(5px); /* Adjust the blur value as needed */
+      z-index: 0;
+    }
+    .container {
+      display: flex;
+      width: 80%;
+      max-width: 900px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 1;
+    }
+    .left-panel {
+      flex: 1;
+      padding: 40px;
+      text-align: center;
+    }
+    .logo {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #fff; /* White text for contrast */
+      font-family: "Rubik Dirt", serif;
+      font-weight: bolder;
+    }
+    .left-panel h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+    .left-panel p {
+      color: #ddd;
+      line-height: 1.5;
+    }
+    .right-panel {
+      flex: 1;
+      padding: 40px;
+      background: white;
+      color: #333;
+      border-radius: 0 10px 10px 0;
+    }
+    .right-panel h2 {
+      font-size: 1.5em;
+      color: #4a90e2;
+      margin-bottom: 10px;
+    }
+    .right-panel p {
+      color: #666;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    .forgot-password {
+      text-align: right;
+      font-size: 0.9em;
+      color: #4a90e2;
+      cursor: pointer;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .or {
+      text-align: center;
+      color: #666;
+      margin: 15px 0;
+    }
+    .signup {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.9em;
+    }
+    .signup a {
+      color: #4a90e2;
+      text-decoration: none;
+    }
+    .login-form, .signup-form {
+      display: block;
+    }
+    .login-form.hidden, .signup-form.hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-blur"></div>
+  <div class="container">
+    <div class="left-panel">
+      <div class="logo">🦴 CRACK TRACK </div>
+      <h1> Hello There!</h1>
+      <p>We are pleased to have you here!</p>
+      <p>Join our waitlist to access cutting-edge tools for detecting bone fractures.</p>
+      <p>Let's get you the support you need.</p>
+    </div>
+    <div class="right-panel">
+      <div class="signup-form" id="signupForm">
+        <h2>Sign Up</h2>
+        <p>Create your account to get started.</p>
+        <div class="form-group">
+          <input type="text" placeholder="Full Name" id="fullName">
+        </div>
+        <div class="form-group">
+          <input type="text" placeholder="Email" id="email">
+        </div>
+        <div class="form-group">
+          <input type="password" placeholder="Password" id="signupPassword">
+        </div>
+        <button onclick="signup()">Sign Up</button>
+        <div class="signup"><a href="#" onclick="showLogin(event)">Already have an account? Login</a></div>
+      </div>
+      <div class="login-form hidden">
+        <h2>Welcome Back</h2>
+        <div class="form-group">
+          <input type="text" placeholder="Username" id="username">
+        </div>
+        <div class="form-group">
+          <input type="password" placeholder="Password" id="password">
+        </div>
+        <div class="forgot-password">Forgot Password?</div>
+        <button onclick="login()">Login</button>
+        <div class="or">OR</div>
+        <div class="signup"><a href="#" onclick="showSignup(event)">Don't have an account? Sign Up</a></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function login() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      if (username && password) {
+        window.location.href = 'index.html';
+      } else {
+        alert('Please fill in both fields');
+      }
+    }
+
+    function signup() {
+      const fullName = document.getElementById('fullName').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('signupPassword').value;
+      if (fullName && email && password) {
+        alert('Sign up successful for ' + fullName);
+        document.getElementById('signupForm').classList.add('hidden');
+        document.querySelector('.login-form').classList.remove('hidden');
+        document.getElementById('fullName').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('signupPassword').value = '';
+      } else {
+        alert('Please fill in all fields');
+      }
+    }
+
+    function showSignup(event) {
+      event.preventDefault();
+      document.querySelector('.login-form').classList.add('hidden');
+      document.getElementById('signupForm').classList.remove('hidden');
+    }
+
+    function showLogin(event) {
+      event.preventDefault();
+      document.getElementById('signupForm').classList.add('hidden');
+      document.querySelector('.login-form').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
